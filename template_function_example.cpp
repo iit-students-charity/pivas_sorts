@@ -8,13 +8,13 @@ public:
     bool operator>(const Size &second) { return index(symbol) > index(second.symbol); }
     bool operator<(const Size &second) { return index(symbol) < index(second.symbol); }
     bool operator==(const Size &second) { return symbol == second.symbol; }
-    bool operator>=(const Size &second) { return index(symbol) >= index(second.symbol); }
-    bool operator<=(const Size &second) { return index(symbol) <= index(second.symbol); }
 
     char get_symbol() { return symbol; }
+
 private:
-    char symbols[3] = {'S', 'M', 'L'};
-    int symbols_size = 3;
+
+    char symbols[5] = {'A', 'B', 'C', 'D', 'E'};
+    int symbols_size = 5;
     char symbol;
 
     int index(char symbol) {
@@ -42,6 +42,32 @@ void bubble_sort(type array[], int size)
 }
 
 template < typename type >
+void shaker_sort(type array[], int size)
+{
+    for (int left_idx = 0, right_idx = size - 1;
+         left_idx < right_idx;)
+    {
+        for (int idx = left_idx; idx < right_idx; idx++)
+        {
+            if (array[idx + 1] < array[idx])
+            {
+                swap<type>(array[idx], array[idx + 1]);
+            }
+        }
+        right_idx--;
+
+        for (int idx = right_idx; idx > left_idx; idx--)
+        {
+            if (array[idx - 1] >  array[idx])
+            {
+                swap<type>(array[idx - 1], array[idx]);
+            }
+        }
+        left_idx++;
+    }
+}
+
+template < typename type >
 void selection_sort(type array[], int size)
 {
     int min_index;
@@ -59,20 +85,20 @@ int main() {
     int  int_array[size] {1, 3, 2, 7, 5, 9, 4, 6, 8};
     double double_array[size] {1.3, 1.0, 1.2999, 2.1, 2.001, 3.17, 3.5, 12.3, 7.2};
     Size size_array[size] {
-        Size('M'),
-        Size('S'),
-        Size('S'),
-        Size('L'),
-        Size('S'),
-        Size('S'),
-        Size('M'),
-        Size('L'),
-        Size('M')
+        Size('B'),
+        Size('A'),
+        Size('C'),
+        Size('D'),
+        Size('A'),
+        Size('D'),
+        Size('E'),
+        Size('A'),
+        Size('C')
     };
 
-    bubble_sort<int>(int_array, size);
-    bubble_sort<double>(double_array, size);
-    bubble_sort<Size>(size_array, size);
+    shaker_sort<int>(int_array, size);
+    shaker_sort<double>(double_array, size);
+    shaker_sort<Size>(size_array, size);
 
     for (int i = 0; i < size; i++)
         std::cout << int_array[i] << ' ';
