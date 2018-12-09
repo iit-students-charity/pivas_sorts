@@ -33,15 +33,6 @@ void swap(type &first, type &second) {
 }
 
 template < typename type >
-void bubble_sort(type array[], int size)
-{
-    for (int i = 0; i < size - 1; i++)
-        for (int j = 0; j < size - i - 1; j++)
-            if (array[j] > array[j + 1])
-                swap<type>(array[j], array[j + 1]);
-}
-
-template < typename type >
 void shaker_sort(type array[], int size)
 {
     for (int left_idx = 0, right_idx = size - 1;
