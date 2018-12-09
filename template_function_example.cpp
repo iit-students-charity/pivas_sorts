@@ -1,4 +1,6 @@
 #include <iostream>
+#include <list>
+#include <list>
 
 class Size {
 public:
@@ -59,15 +61,13 @@ void shaker_sort(type array[], int size)
 }
 
 template < typename type >
-void selection_sort(type array[], int size)
-{
-    int min_index;
-    for (int i = 0; i < size - 1; i++) {
-        min_index = i;
-        for (int j = i + 1; j < size; j++)
-            if (array[j] < array[min_index])
-                min_index = j;
-        swap<type>(array[min_index], array[i]);
+void gnome_sort(type array[], int size) {
+    for (int i = 0; i + 1 < size; ++i) {
+        if (array[i] > array[i + 1]) {
+            swap(array[i], array[i + 1]);
+            if (i != 0)
+                i -= 2;
+        }
     }
 }
 
@@ -90,6 +90,34 @@ int main() {
     shaker_sort<int>(int_array, size);
     shaker_sort<double>(double_array, size);
     shaker_sort<Size>(size_array, size);
+
+    for (int i = 0; i < size; i++)
+        std::cout << int_array[i] << ' ';
+    std::cout << std::endl;
+    for (int i = 0; i < size; i++)
+        std::cout << double_array[i] << ' ';
+    std::cout << std::endl;
+    for (int i = 0; i < size; i++)
+        std::cout << size_array[i].get_symbol() << ' ';
+    std::cout << std::endl;
+
+    int gnome_int_array[size] {4, 6, 5, 12, 8, 12, 7, 9, 11};
+    double gnome_double_array[size] {1.31, 11.0, 12.2999, 32.1, 2.0501, 33.17, 33.5, 12.63, 7.42};
+    Size gnome_size_array[size] {
+        Size('A'),
+        Size('B'),
+        Size('C'),
+        Size('E'),
+        Size('A'),
+        Size('C'),
+        Size('E'),
+        Size('D'),
+        Size('C')
+    };
+
+    gnome_sort<int>(gnome_int_array, size);
+    gnome_sort<double>(gnome_double_array, size);
+    gnome_sort<Size>(gnome_size_array, size);
 
     for (int i = 0; i < size; i++)
         std::cout << int_array[i] << ' ';
